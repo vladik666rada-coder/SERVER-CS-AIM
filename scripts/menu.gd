@@ -11,12 +11,32 @@ const PORT := 7777
 @onready var join_btn: Button = $Center/Panel/VBox/JoinBtn
 
 func _ready() -> void:
+	if DisplayServer.get_name() == "headless":
+		_start_dedicated_server()
+		return
 	host_btn.pressed.connect(_on_host)
 	offline_btn.pressed.connect(_on_offline)
 	join_btn.pressed.connect(_on_join)
 	var ip := _local_ip()
 	ip_edit.text = ip if ip != "" else "127.0.0.1"
 	status_label.text = ""
+
+func _start_dedicated_server() -> void:
+	var port := 7777
+	var env_port := OS.get_environment("PORT")
+	if env_port.is_valid_int():
+		port = env_port.to_int()
+	var peer := ENetMultiplayerPeer.new()
+	var err := peer.create_server(port, 8)
+	if err != OK:
+		push_error("Server failed on port %d: %d" % [port, err])
+		get_tree().quit(1)
+		return
+	multiplayer.multiplayer_peer = peer
+	print("Dedicated server listening on port %d" % port)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _apply_nick() -> void:
 	var nick := nick_edit.text.strip_edges()
