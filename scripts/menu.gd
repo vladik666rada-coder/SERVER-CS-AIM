@@ -11,7 +11,7 @@ const PORT := 7777
 @onready var join_btn: Button = $Center/Panel/VBox/JoinBtn
 
 func _ready() -> void:
-	if DisplayServer.get_name() == "headless":
+	if _is_headless_server():
 		_start_dedicated_server()
 		return
 	host_btn.pressed.connect(_on_host)
@@ -21,9 +21,17 @@ func _ready() -> void:
 	ip_edit.text = ip if ip != "" else "127.0.0.1"
 	status_label.text = ""
 
+func _is_headless_server() -> bool:
+	if DisplayServer.get_name() == "headless":
+		return true
+	if "--headless" in OS.get_cmdline_args() or "--headless" in OS.get_cmdline_user_args():
+		return true
+	return OS.has_feature("server")
+
 func _start_dedicated_server() -> void:
 	var port := 7777
 	var env_port := OS.get_environment("PORT")
+	print("PORT env: '%s'" % env_port)
 	if env_port.is_valid_int():
 		port = env_port.to_int()
 	var peer := WebSocketMultiplayerPeer.new()
