@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c1u0b1a3dsu1e"]
+
+[ext_resource type="PackedScene" path="res://models/ak47.glb" id="1"]
+
+[node name="AK47" type="Node3D" unique_id=560720208]
+
+[node name="Model" parent="." unique_id=1081073035 instance=ExtResource("1")]
+transform = Transform3D(0, 0, 0.45, 0, 0.45, 0, -0.45, 0, 0, 0, 0, 0)

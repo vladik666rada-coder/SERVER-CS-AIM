@@ -1,0 +1,124 @@
+[gd_scene load_steps=11 format=3 uid="uid://ddeathfx00001"]
+
+[sub_resource type="SphereMesh" id="spark_mesh"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="SphereMesh" id="glow_mesh"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="BoxMesh" id="debris_mesh"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="spark_mat"]
+albedo_color = Color(1, 0.9, 0.3, 1)
+emission_enabled = true
+emission = Color(1, 0.8, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="debris_mat"]
+albedo_color = Color(0.85, 0.15, 0.1, 1)
+emission_enabled = true
+emission = Color(0.8, 0.05, 0.05, 1)
+
+[sub_resource type="SphereMesh" id="smoke_mesh"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="StandardMaterial3D" id="smoke_mat"]
+transparency = 1
+albedo_color = Color(0.2, 0.2, 0.25, 0.7)
+
+[sub_resource type="SphereMesh" id="flash_mesh"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="flash_mat"]
+transparency = 1
+albedo_color = Color(1, 0.95, 0.8, 0.9)
+emission_enabled = true
+emission = Color(1, 0.95, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="glow_mat"]
+transparency = 1
+albedo_color = Color(1, 0.9, 0.5, 1)
+emission_enabled = true
+emission = Color(1, 0.7, 0.2, 1)
+
+[node name="DeathEffect" type="Node3D"]
+
+[node name="Flash" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+emitting = true
+amount = 1
+lifetime = 0.15
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+mesh = SubResource("flash_mesh")
+material_override = SubResource("flash_mat")
+
+[node name="Glow" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+emitting = true
+amount = 24
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 8.0
+scale_amount_min = 0.15
+scale_amount_max = 0.45
+mesh = SubResource("glow_mesh")
+
+[node name="Sparks" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+emitting = true
+amount = 60
+lifetime = 1.1
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector3(0, -12, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 12.0
+scale_amount_min = 0.03
+scale_amount_max = 0.08
+mesh = SubResource("spark_mesh")
+material_override = SubResource("spark_mat")
+
+[node name="Debris" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+emitting = true
+amount = 30
+lifetime = 1.4
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector3(0, -20, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+mesh = SubResource("debris_mesh")
+
+[node name="Smoke" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+emitting = true
+amount = 16
+lifetime = 1.6
+one_shot = true
+explosiveness = 1.0
+spread = 90.0
+gravity = Vector3(0, 2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+scale_amount_min = 0.6
+scale_amount_max = 1.4
+mesh = SubResource("smoke_mesh")
+material_override = SubResource("smoke_mat")

@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://cev4tglibogjt"]
+
+[ext_resource type="Script" uid="uid://cu8x4uhsyqqxr" path="res://scripts/player.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://bhmrpaqcbw0v3" path="res://scenes/gun.tscn" id="2"]
+[ext_resource type="AudioStream" uid="uid://bkyr7up3l0cnl" path="res://sounds/shoot.mp3" id="3"]
+[ext_resource type="AudioStream" uid="uid://bcmoyyodh1hs0" path="res://sounds/walk.mp3" id="4"]
+[ext_resource type="PackedScene" uid="uid://cygolhwhsiyto" path="res://scenes/knife.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://c1u0b1a3dsu1e" path="res://scenes/ak47.tscn" id="6"]
+
+[sub_resource type="CapsuleShape3D" id="cap"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="SphereMesh" id="muzzle_mesh"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="flash_mat"]
+albedo_color = Color(1, 0.7, 0.2, 1)
+emission_enabled = true
+emission = Color(1, 0.6, 0.1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="CapsuleMesh" id="body_mesh"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="body_mat"]
+albedo_color = Color(0.2, 0.5, 0.9, 1)
+roughness = 0.7
+
+[node name="Player" type="CharacterBody3D" unique_id=54840708]
+script = ExtResource("1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1719426055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("cap")
+
+[node name="Head" type="Node3D" parent="." unique_id=2051784959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=227046473]
+
+[node name="Pistol" type="Node3D" parent="Head" unique_id=629631156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.25, -0.5)
+
+[node name="Gun" parent="Head/Pistol" unique_id=1891373651 instance=ExtResource("2")]
+transform = Transform3D(-0.004607296, -0.24991578, -0.0045699887, -0.24985214, 0.0044718646, 0.007342102, -0.007257883, 0.004702598, -0.24985042, 0.23993123, -0.012186527, -0.83794665)
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="Head/Pistol" unique_id=1504019531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28000003, 0.23016226, -1.2669383)
+light_color = Color(1, 0.7, 0.3, 1)
+light_energy = 0.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Head/Pistol/MuzzleFlash" unique_id=1582080334]
+visible = false
+mesh = SubResource("muzzle_mesh")
+surface_material_override/0 = SubResource("flash_mat")
+
+[node name="Knife" parent="Head" unique_id=971499924 instance=ExtResource("5")]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -0.4, 0.29256094, -0.8110121)
+
+[node name="AK47" parent="Head" unique_id=600475161 instance=ExtResource("6")]
+transform = Transform3D(-0.99973536, 0, 0.023004085, 0, 1, 0, -0.023004085, 0, -0.99973536, 0.25, -0.25, -0.55)
+
+[node name="AKMuzzleFlash" type="OmniLight3D" parent="Head/AK47" unique_id=1159670308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.55)
+light_color = Color(1, 0.7, 0.3, 1)
+light_energy = 0.0
+
+[node name="Mesh" type="MeshInstance3D" parent="Head/AK47/AKMuzzleFlash" unique_id=751358623]
+visible = false
+mesh = SubResource("muzzle_mesh")
+surface_material_override/0 = SubResource("flash_mat")
+
+[node name="ShootSound" type="AudioStreamPlayer3D" parent="." unique_id=210045210]
+stream = ExtResource("3")
+volume_db = -15.968
+max_distance = 100.0
+
+[node name="WalkSound" type="AudioStreamPlayer3D" parent="." unique_id=1669040748]
+stream = ExtResource("4")
+volume_db = -8.0
+max_distance = 40.0
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=38514662]
+transform = Transform3D(1.0669985, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("body_mesh")
+surface_material_override/0 = SubResource("body_mat")
+
+[node name="NameLabel" type="Label3D" parent="." unique_id=877863653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 1
+no_depth_test = true
+text = "Игрок"
+font_size = 48
+outline_size = 8

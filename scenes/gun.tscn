@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bhmrpaqcbw0v3"]
+
+[ext_resource type="PackedScene" uid="uid://febmwgjrm08m" path="res://models/gun.glb" id="1"]
+
+[sub_resource type="Animation" id="Animation_x77fm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.0201659, 0.0036017895, -0.010917008)]
+}
+
+[sub_resource type="Animation" id="Animation_gp1hk"]
+resource_name = "idle"
+length = 0.93333334
+
+[sub_resource type="Animation" id="Animation_og67c"]
+resource_name = "reload"
+length = 1.4333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cube:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23333335, 0.59428555),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.0201659, 0.0036017895, -0.010917008), Vector3(-1.0828867, 0.029444456, -0.7135639), Vector3(-1.0201659, 0.0036017895, -0.010917008)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gp1hk"]
+_data = {
+&"RESET": SubResource("Animation_x77fm"),
+&"idle": SubResource("Animation_gp1hk"),
+&"reload": SubResource("Animation_og67c")
+}
+
+[node name="Gun" unique_id=799084409 instance=ExtResource("1")]
+transform = Transform3D(0.018465286, 0.24920359, 0.0075171804, -0.24832582, 0.017711893, 0.022817977, 0.02221275, -0.009152191, 0.24884294, 0.10783437, 1.2373079, -0.25)
+
+[node name="Cube" parent="." index="0" unique_id=130094180]
+transform = Transform3D(0.31417796, 0.0040986505, -0.067919746, -0.0032531603, 0.39673144, -4.9766153e-05, 0.01447545, 0.00020223949, 1.4741296, -1.0201659, 0.0036017895, -0.010917008)
+
+[node name="Cube_001" parent="." index="1" unique_id=82485234]
+transform = Transform3D(0.25619853, 0, 0, 0, 0.1270923, 0, 0, 0, -0.08262073, -0.23676467, 0, 0.4647562)
+
+[node name="Cube_002" parent="." index="2" unique_id=1140048356]
+transform = Transform3D(0.7397016, -1.6298145e-09, 0.1496034, -7.450581e-09, 0.31836465, 1.3038516e-08, -0.30391905, 5.5879354e-09, 0.36411637, -0.029546738, 0.021309601, -0.802125)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="9" unique_id=151717765]
+libraries/ = SubResource("AnimationLibrary_gp1hk")

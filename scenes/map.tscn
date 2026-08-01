@@ -1,0 +1,194 @@
+[gd_scene format=3 uid="uid://drtol8sj6jqxa"]
+
+[ext_resource type="PackedScene" path="res://scenes/trampoline.tscn" id="1_tramp"]
+
+[sub_resource type="PlaneMesh" id="ground_mesh"]
+size = Vector2(120, 120)
+
+[sub_resource type="StandardMaterial3D" id="ground_mat"]
+albedo_color = Color(0.32, 0.52, 0.28, 1)
+roughness = 0.9
+
+[sub_resource type="BoxShape3D" id="ground_shape"]
+size = Vector3(120, 0.2, 120)
+
+[sub_resource type="BoxMesh" id="box_mesh"]
+size = Vector3(4, 1, 4)
+
+[sub_resource type="StandardMaterial3D" id="plat_mat"]
+albedo_color = Color(0.55, 0.5, 0.42, 1)
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="box_shape"]
+size = Vector3(4, 1, 4)
+
+[sub_resource type="BoxMesh" id="ramp_mesh"]
+size = Vector3(6, 0.3, 6)
+
+[sub_resource type="StandardMaterial3D" id="ramp_mat"]
+albedo_color = Color(0.6, 0.55, 0.5, 1)
+roughness = 0.7
+
+[sub_resource type="BoxShape3D" id="ramp_shape"]
+size = Vector3(6, 0.3, 6)
+
+[sub_resource type="BoxMesh" id="crate_mesh"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="crate_mat"]
+albedo_color = Color(0.65, 0.42, 0.2, 1)
+roughness = 0.7
+
+[sub_resource type="BoxShape3D" id="crate_shape"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="pillar_mesh"]
+size = Vector3(1, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="pillar_mat"]
+albedo_color = Color(0.45, 0.48, 0.55, 1)
+roughness = 0.6
+
+[sub_resource type="BoxShape3D" id="pillar_shape"]
+size = Vector3(1, 4, 1)
+
+[node name="Map" type="Node3D" unique_id=866981164]
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1947039722]
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=859469118]
+mesh = SubResource("ground_mesh")
+surface_material_override/0 = SubResource("ground_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Ground" unique_id=1929529635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("ground_shape")
+
+[node name="Platform1" type="StaticBody3D" parent="." unique_id=1849894185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform1" unique_id=1497753183]
+mesh = SubResource("box_mesh")
+surface_material_override/0 = SubResource("plat_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Platform1" unique_id=1464580185]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("box_shape")
+
+[node name="Platform2" type="StaticBody3D" parent="." unique_id=957807955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform2" unique_id=758084059]
+mesh = SubResource("box_mesh")
+surface_material_override/0 = SubResource("plat_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Platform2" unique_id=1982823414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("box_shape")
+
+[node name="Platform3" type="StaticBody3D" parent="." unique_id=2065356087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Platform3" unique_id=598007686]
+mesh = SubResource("box_mesh")
+surface_material_override/0 = SubResource("plat_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Platform3" unique_id=1274094107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("box_shape")
+
+[node name="Ramp1" type="StaticBody3D" parent="." unique_id=957509625]
+transform = Transform3D(0.9659258, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.9659258, 5, 0.2, 2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ramp1" unique_id=1838691382]
+mesh = SubResource("ramp_mesh")
+surface_material_override/0 = SubResource("ramp_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Ramp1" unique_id=1691296703]
+shape = SubResource("ramp_shape")
+
+[node name="Ramp2" type="StaticBody3D" parent="." unique_id=1034552149]
+transform = Transform3D(0.9659258, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.9659258, -5, 0.2, -2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ramp2" unique_id=1845098002]
+mesh = SubResource("ramp_mesh")
+surface_material_override/0 = SubResource("ramp_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Ramp2" unique_id=1286322077]
+shape = SubResource("ramp_shape")
+
+[node name="Crate1" type="StaticBody3D" parent="." unique_id=617213152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 1, 6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Crate1" unique_id=811110090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.738389)
+mesh = SubResource("crate_mesh")
+surface_material_override/0 = SubResource("crate_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Crate1" unique_id=942660000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("crate_shape")
+
+[node name="Crate2" type="StaticBody3D" parent="." unique_id=1873201268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Crate2" unique_id=1967786888]
+mesh = SubResource("crate_mesh")
+surface_material_override/0 = SubResource("crate_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Crate2" unique_id=795340998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("crate_shape")
+
+[node name="Crate3" type="StaticBody3D" parent="." unique_id=619681140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -14)
+
+[node name="Mesh" type="MeshInstance3D" parent="Crate3" unique_id=2059566428]
+mesh = SubResource("crate_mesh")
+surface_material_override/0 = SubResource("crate_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Crate3" unique_id=1673779422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("crate_shape")
+
+[node name="Crate4" type="StaticBody3D" parent="." unique_id=486926424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 14)
+
+[node name="Mesh" type="MeshInstance3D" parent="Crate4" unique_id=863120804]
+mesh = SubResource("crate_mesh")
+surface_material_override/0 = SubResource("crate_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Crate4" unique_id=523295075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("crate_shape")
+
+[node name="Pillar1" type="StaticBody3D" parent="." unique_id=193213846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2, -12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Pillar1" unique_id=1777028557]
+mesh = SubResource("pillar_mesh")
+surface_material_override/0 = SubResource("pillar_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Pillar1" unique_id=1594987320]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+shape = SubResource("pillar_shape")
+
+[node name="Pillar2" type="StaticBody3D" parent="." unique_id=1357527769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 2, 12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Pillar2" unique_id=1841013584]
+mesh = SubResource("pillar_mesh")
+surface_material_override/0 = SubResource("pillar_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="Pillar2" unique_id=2018941776]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+shape = SubResource("pillar_shape")
+
+[node name="Trampoline1" parent="." unique_id=902471011 instance=ExtResource("1_tramp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="Trampoline2" parent="." unique_id=1018835300 instance=ExtResource("1_tramp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6)
+
+[node name="Trampoline3" parent="." unique_id=847689816 instance=ExtResource("1_tramp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -6)
