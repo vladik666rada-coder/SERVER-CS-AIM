@@ -1,8 +1,11 @@
 # Godot
 .godot/
-build/
 *.log
 *.tmp
+
+# Исключаем build, кроме сервера для Railway
+build/*
+!build/server/
 
 # OS
 Thumbs.db
