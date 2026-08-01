@@ -7,6 +7,8 @@ WORKDIR /app
 COPY build/server/cs-aim-server.x86_64 /app/server.x86_64
 COPY build/server/cs-aim-server.pck /app/server.pck
 
+RUN chmod +x /app/server.x86_64
+
 EXPOSE 7777
 
 ENV PORT=7777
