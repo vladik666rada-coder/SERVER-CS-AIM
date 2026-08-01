@@ -89,7 +89,11 @@ func _on_join() -> void:
 		return
 	var url := _build_ws_url(host, port)
 	var peer := WebSocketMultiplayerPeer.new()
-	var err := peer.create_client(url)
+	var err: Error
+	if url.begins_with("wss://"):
+		err = peer.create_client(url, TLSOptions.client_unsafe())
+	else:
+		err = peer.create_client(url)
 	if err != OK:
 		status_label.text = "Ошибка подключения: %d" % err
 		return
