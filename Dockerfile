@@ -12,4 +12,4 @@ RUN chmod +x /app/server.x86_64
 EXPOSE 7777
 
 ENV PORT=7777
-CMD ["./server.x86_64", "--headless"]
+CMD ["/bin/bash", "-c", "stdbuf -oL -eL ./server.x86_64 --headless"]
