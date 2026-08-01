@@ -26,8 +26,8 @@ func _start_dedicated_server() -> void:
 	var env_port := OS.get_environment("PORT")
 	if env_port.is_valid_int():
 		port = env_port.to_int()
-	var peer := ENetMultiplayerPeer.new()
-	var err := peer.create_server(port, 8)
+	var peer := WebSocketMultiplayerPeer.new()
+	var err := peer.create_server(port)
 	if err != OK:
 		push_error("Server failed on port %d: %d" % [port, err])
 		get_tree().quit(1)
@@ -37,6 +37,18 @@ func _start_dedicated_server() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func _build_ws_url(host: String, port: int) -> String:
+	if host.begins_with("ws://") or host.begins_with("wss://"):
+		return host
+	var is_domain := false
+	for c in host:
+		if not c.is_valid_int() and c != ".":
+			is_domain = true
+			break
+	if is_domain:
+		return "wss://%s" % host
+	return "ws://%s:%d" % [host, port]
 
 func _apply_nick() -> void:
 	var nick := nick_edit.text.strip_edges()
@@ -53,8 +65,8 @@ func _local_ip() -> String:
 func _on_host() -> void:
 	_apply_nick()
 	var port := int(port_edit.text)
-	var peer := ENetMultiplayerPeer.new()
-	var err := peer.create_server(port, 1)
+	var peer := WebSocketMultiplayerPeer.new()
+	var err := peer.create_server(port)
 	if err != OK:
 		status_label.text = "Ошибка сервера: %d" % err
 		return
@@ -70,18 +82,19 @@ func _on_offline() -> void:
 
 func _on_join() -> void:
 	_apply_nick()
-	var ip := ip_edit.text.strip_edges()
+	var host := ip_edit.text.strip_edges()
 	var port := int(port_edit.text)
-	if ip == "":
-		status_label.text = "Введи IP"
+	if host == "":
+		status_label.text = "Введи IP или домен"
 		return
-	var peer := ENetMultiplayerPeer.new()
-	var err := peer.create_client(ip, port)
+	var url := _build_ws_url(host, port)
+	var peer := WebSocketMultiplayerPeer.new()
+	var err := peer.create_client(url)
 	if err != OK:
 		status_label.text = "Ошибка подключения: %d" % err
 		return
 	multiplayer.multiplayer_peer = peer
-	status_label.text = "Подключение к %s:%d..." % [ip, port]
+	status_label.text = "Подключение к %s..." % url
 	_set_busy(true)
 	multiplayer.connected_to_server.connect(_start_game)
 	multiplayer.connection_failed.connect(_on_connection_failed)

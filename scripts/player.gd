@@ -91,7 +91,7 @@ func _am_authority() -> bool:
 	if not multiplayer.has_multiplayer_peer():
 		return true
 	var peer := multiplayer.multiplayer_peer
-	if peer is ENetMultiplayerPeer and peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+	if peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
 		return false
 	return is_multiplayer_authority()
 
