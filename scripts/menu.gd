@@ -20,8 +20,16 @@ func _ready() -> void:
 	var ip := _local_ip()
 	ip_edit.text = ip if ip != "" else "127.0.0.1"
 	status_label.text = ""
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--autojoin="):
+			ip_edit.text = arg.trim_prefix("--autojoin=")
+			port_edit.text = "7777"
+			call_deferred("_on_join")
+			break
 
 func _is_headless_server() -> bool:
+	if "--client" in OS.get_cmdline_args() or "--client" in OS.get_cmdline_user_args():
+		return false
 	if DisplayServer.get_name() == "headless":
 		return true
 	if "--headless" in OS.get_cmdline_args() or "--headless" in OS.get_cmdline_user_args():
