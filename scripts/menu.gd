@@ -78,8 +78,18 @@ func _local_ip() -> String:
 			return addr
 	return ""
 
+func _is_domain(host: String) -> bool:
+	for c in host:
+		if not c.is_valid_int() and c != ".":
+			return true
+	return false
+
 func _on_host() -> void:
 	_apply_nick()
+	var host := ip_edit.text.strip_edges()
+	if _is_domain(host):
+		_connect_to_server(host)
+		return
 	var port := int(port_edit.text)
 	var peer := WebSocketMultiplayerPeer.new()
 	var err := peer.create_server(port)
@@ -99,10 +109,13 @@ func _on_offline() -> void:
 func _on_join() -> void:
 	_apply_nick()
 	var host := ip_edit.text.strip_edges()
-	var port := int(port_edit.text)
 	if host == "":
 		status_label.text = "Введи IP или домен"
 		return
+	_connect_to_server(host)
+
+func _connect_to_server(host: String) -> void:
+	var port := int(port_edit.text)
 	var url := _build_ws_url(host, port)
 	var peer := WebSocketMultiplayerPeer.new()
 	var err: Error
