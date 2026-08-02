@@ -39,7 +39,7 @@ func _spawn_point_for(id: int) -> Vector3:
 	return SPAWN_POINTS[idx % SPAWN_POINTS.size()]
 
 func _on_peer_connected(id: int) -> void:
-	pass
+	print("PEER CONNECTED id=%d, players=%d" % [id, players.get_child_count()])
 
 func _on_peer_disconnected(id: int) -> void:
 	var p := players.get_node_or_null(str(id))
@@ -55,6 +55,7 @@ func client_ready() -> void:
 	if not multiplayer.is_server():
 		return
 	var id := multiplayer.get_remote_sender_id()
+	print("CLIENT READY id=%d, players=%d" % [id, players.get_child_count()])
 	if players.get_node_or_null(str(id)) == null:
 		_spawn_player(id, _spawn_point_for(id))
 		for p in players.get_children():
